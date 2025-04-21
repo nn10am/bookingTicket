@@ -1,0 +1,16 @@
+# VS Code Settings
+.vscode/
+
+# alembic
+backend/alembic
+backend/alembic.ini
+
+# venv
+backend/venv
+
+# environment variables
+backend/.env       
+
+# Logs and local database file
+*.logs 
+db.sqlite3
