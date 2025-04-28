@@ -1,4 +1,4 @@
-from fastapi import status
+from fastapi import status, HTTPException
 from pydantic import BaseModel
 from ..models.eventModel import Event
 from ..schemas.eventSchema import (
@@ -37,7 +37,20 @@ def fetch_event_by_id(db: Session, event_id: int):
 # Create new event
 def create_event(db: Session, event: EventCreate):
     validate_seats_logic(event.total_seats, event.available_seats)
+    
+    # Check if event with the same name, venue, start_time already exists
+    existing_event = db.query(Event).filter(
+        Event.event_name == event.event_name,
+        Event.venue == event.venue,
+        Event.start_time == event.start_time
+    ).first()
 
+    if existing_event:
+        raise HTTPException(
+            status_code = 400,
+            detail = "An event with the same name, venue, and start time already exists. Try again."
+        )
+    
     db_event = Event(**event.dict())
     db.add(db_event)
     db.commit()

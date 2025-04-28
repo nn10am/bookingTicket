@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from ..models.eventModel import Event
 from .errorHandleUtil import not_found_error
-from typing import Any, Dict
+
 
 # Find event_id in database
 def get_event_or_404(db: Session, event_id: int) -> Event:
@@ -11,14 +11,4 @@ def get_event_or_404(db: Session, event_id: int) -> Event:
     
     return db_event
 
-# 
-def apply_event_update(db: Session, event: Event, updates: Dict[str, Any]) -> Event:
-    """
-    Sets each key/value on the event, commits & refreshes,
-    then returns the updated instance
-    """
-    for attr, val in updates.items():
-        setattr(event, attr, val)
-    db.commit()
-    db.refresh(event)
-    return event
+

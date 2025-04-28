@@ -10,7 +10,7 @@ backend/venv
 
 # environment variables
 backend/.env       
-
+backend/migrations/
 # Logs and local database file
 *.logs 
 db.sqlite3
