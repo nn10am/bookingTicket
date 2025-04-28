@@ -1,10 +1,5 @@
 # VS Code Settings
 .vscode/
-
-# alembic
-backend/alembic
-backend/alembic.ini
-
 # venv
 backend/venv
 
