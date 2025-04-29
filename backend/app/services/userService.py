@@ -22,6 +22,10 @@ def get_all_users(db: Session):
         print("Error fetching users:", str(e))
         generic_error()
 
+# Get user by id
+def get_user_by_id(db: Session, user_id: int):
+    return db.query(User).filter(User.id == user_id).first()
+
 # Register new user
 def create_new_user(create_user_request: CreateUserRequest, db: Session):
     try:

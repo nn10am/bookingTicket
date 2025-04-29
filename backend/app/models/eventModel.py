@@ -4,7 +4,8 @@ from ..db.base import Base
 
 class Event(Base):
     __tablename__ = "events"
-    event_id = Column(Integer, primary_key=True, index=True)
+    
+    id = Column(Integer, primary_key=True, index=True)
     event_name = Column(String, index = True, nullable=False)
     start_time = Column(DateTime, nullable=False)
     end_time = Column(DateTime, nullable=False)

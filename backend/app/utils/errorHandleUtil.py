@@ -67,6 +67,10 @@ def available_seats_exceed_error():
         detail="Avaialbe seats cannot exceed total seats."
     )
 
+# Insufficient seats
+def insufficient_seat():
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Not enough seats available")
+
 # Not found error
 def not_found_error(entity: str):
     raise HTTPException(
@@ -80,6 +84,7 @@ def invalid_event_status_error():
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         detail=f"Invalid event status"
     )
+
 
 # Validate event status
 def validate_event_status(status: str):
