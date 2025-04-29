@@ -11,7 +11,7 @@ from ..utils.errorHandleUtil import (
     validate_password_length,
     generic_error
 )
-from ..utils.authUtil import bcrypt_context, get_user_by_field
+from ..utils.authUtil import bcrypt_context, get_user_by_field, hash_password
 
 # Fetch all users
 def get_all_users(db: Session):
@@ -46,7 +46,7 @@ def create_new_user(create_user_request: CreateUserRequest, db: Session):
             raise user_exists_error("Email")
         
         # Hash the password:
-        hashed_password = bcrypt_context.hash(create_user_request.password)
+        hashed_password = hash_password(create_user_request.password)
 
         # Create user instance
         user = User(
