@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from passlib.context import CryptContext
 from datetime import timedelta, datetime
 from passlib.context import CryptContext
@@ -12,15 +13,28 @@ import os
 # Constants
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
+SALT = os.getenv("SALT")
 
 # TOKEN EXPIRES
 ACCESS_TOKEN_EXPIRE_MINUTES = 20
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+# Apply salt password
+def apply_salt(password: str) -> str:
+    if not SALT:
+        raise ValueError("SALT not set in the environment variables.")
+    return password + SALT
+
 # Hashing password
 def hash_password(password: str) -> str:
-    return bcrypt_context.hash(password)
+    salted_pass = apply_salt(password)
+    return bcrypt_context.hash(salted_pass)
+
+# Verify password
+def verify_password(plain_pass: str, hashed_pass: str) -> bool:
+    salted_pass = apply_salt(plain_pass)
+    return bcrypt_context.verify(salted_pass, hashed_pass)
 
 # Authenticate user
 def authenticate_user(identifier: str, password: str, db: Session):
@@ -32,7 +46,7 @@ def authenticate_user(identifier: str, password: str, db: Session):
         # If not 'email', treat as 'username'
         user = get_user_by_field('username', identifier, db)
     
-    if not user or not bcrypt_context.verify(password, user.hashed_password):
+    if not user or not verify_password(password, user.hashed_password):
         return False
 
     return user
