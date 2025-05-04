@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, UniqueConstraint
 from ..db.base import Base
-
+from sqlalchemy.orm import relationship
 
 class Event(Base):
     __tablename__ = "events"
@@ -17,3 +17,6 @@ class Event(Base):
     __table_args__ = (
         UniqueConstraint('event_name', 'venue', 'start_time', name='uix_event_name_venue_start'),
     )
+
+    # Relationship
+    bookings = relationship('Booking', back_populates='event')

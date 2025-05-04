@@ -33,7 +33,7 @@ class EventUpdate(BaseModel):
         
 
 class EventResponse(EventBase):
-    event_id: int
+    id: int
 
     class Config:
         orm_mode = True
