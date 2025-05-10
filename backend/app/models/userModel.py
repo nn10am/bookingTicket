@@ -14,3 +14,6 @@ class User(Base):
 
     # Relationships
     bookings = relationship('Booking', back_populates='user')
+
+    class Config:
+        from_attributes = True

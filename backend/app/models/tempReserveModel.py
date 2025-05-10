@@ -9,7 +9,7 @@ class TempReservation(Base):
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     event_id = Column(Integer, ForeignKey('events.id'), nullable=False)
     seats_reserved = Column(Integer, nullable=False)
-    reservation_time = Column(DateTime, default=datetime.utcnow())
+    reservation_time = Column(DateTime, default=datetime.utcnow)
     expiration_time = Column(DateTime)
     status = Column(String, default="pending")
 

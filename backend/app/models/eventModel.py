@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, UniqueConstraint
+from sqlalchemy import Column, Integer, Float, String, DateTime, UniqueConstraint
 from ..db.base import Base
 from sqlalchemy.orm import relationship
 
@@ -10,6 +10,7 @@ class Event(Base):
     start_time = Column(DateTime, nullable=False)
     end_time = Column(DateTime, nullable=False)
     venue = Column(String, nullable=False)
+    price = Column(Float, nullable=False, default=0.0)
     total_seats = Column(Integer, nullable=False, default=0)
     available_seats = Column(Integer, nullable=False, default=0)
     status = Column(String, default="scheduled")

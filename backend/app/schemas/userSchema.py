@@ -8,7 +8,7 @@ class CreateUserRequest(BaseModel):
 class UserResponse(BaseModel):
     id: int
     username: str
-    email: str
+    email: EmailStr
     is_admin: bool
 
     class Config:

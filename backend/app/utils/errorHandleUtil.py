@@ -113,6 +113,19 @@ def validate_eventStatus_transition(current_status: str, new_status: str):
     if new_status not in transitions.get(current_status, set()):
         invalid_eventStatus_transition_error(current_status, new_status)
 
+# Invalid or expired reservation
+def invalid_or_expired_reservation():
+    raise HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        detail="Reservation is invalid or expired."
+    )
+# Invalid reservation access
+def invalid_reservation_access():
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You are not authorized to view this reservation"
+    )
+
 # Restricted filed edit
 def restricted_field_edit_error(field: str, reason: str):
     raise HTTPException(

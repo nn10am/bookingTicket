@@ -2,9 +2,10 @@ from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from email_validator import validate_email, EmailNotValidError
 from ..models.userModel import User
-from ..schemas.userSchema import CreateUserRequest
+from ..schemas.userSchema import CreateUserRequest, UserResponse
 from ..utils.errorHandleUtil import (
     user_exists_error,
+    not_found_error,
     invalid_data_error,
     validate_username_length,
     validate_email_length,
@@ -24,7 +25,21 @@ def get_all_users(db: Session):
 
 # Get user by id
 def get_user_by_id(db: Session, user_id: int):
-    return db.query(User).filter(User.id == user_id).first()
+    user = db.query(User).filter(User.id == user_id).first()
+
+    if not user:
+        not_found_error("User")
+
+    print("DEBUG:", type(user))
+    print("DEBUG:", user.__dict__)
+    
+    return UserResponse.model_validate(user.__dict__)
+    # return UserResponse(
+    #     id = user.id,
+    #     username = user.username,
+    #     email = user.email,
+    #     is_admin = user.is_admin
+    # )
 
 # Register new user
 def create_new_user(create_user_request: CreateUserRequest, db: Session):
