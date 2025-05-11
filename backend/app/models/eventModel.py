@@ -20,4 +20,5 @@ class Event(Base):
     )
 
     # Relationship
+    temp_reservations = relationship('TempReservation', back_populates='event')
     bookings = relationship('Booking', back_populates='event')

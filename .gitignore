@@ -9,3 +9,8 @@ backend/migrations/
 # Logs and local database file
 *.logs 
 db.sqlite3
+
+# Node dependency folder
+frontend/node_modules/
+frontend/package-lock.json
+frontend/npm-debug.log

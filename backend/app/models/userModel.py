@@ -13,6 +13,7 @@ class User(Base):
     is_admin = Column(Boolean, default=False)
 
     # Relationships
+    temp_reservations = relationship('TempReservation', back_populates='user')
     bookings = relationship('Booking', back_populates='user')
 
     class Config:

@@ -132,3 +132,10 @@ def restricted_field_edit_error(field: str, reason: str):
         status_code=status.HTTP_400_BAD_REQUEST,
         detail=f"Cannot update '{field}': {reason}"
     )
+
+# Admin only access error
+def admin_only_error():
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="Access denied: Admin priviledges required."
+    )

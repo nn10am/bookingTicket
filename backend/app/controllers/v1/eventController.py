@@ -3,11 +3,12 @@ from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime
 
-from ..schemas.eventSchema import EventCreate, EventUpdate, EventResponse
-from ..services import eventService
-from ..db.session import get_db
+from ...schemas.eventSchema import EventCreate, EventUpdate, EventResponse
+from ...services import eventService
+from ...db.session import get_db
+from ...config import API_VERSION
 
-router = APIRouter(prefix="/events", tags=["Events"])
+router = APIRouter(prefix=f"{API_VERSION['v1']}/events", tags=["Events"])
 
 
 # Get all events

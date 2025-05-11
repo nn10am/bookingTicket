@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette import status
-from ..schemas.userSchema import CreateUserRequest, UserResponse
-from ..utils.dbUtil import get_db
+from ...schemas.userSchema import CreateUserRequest, UserResponse
+from ...utils.dbUtil import get_db
 from typing import List
-from ..services.userService import create_new_user, get_all_users, get_user_by_id
+from ...services.userService import create_new_user, get_all_users, get_user_by_id
+from ...config import API_VERSION
 
-router = APIRouter(prefix="/users", tags=["Users"])
+router = APIRouter(prefix=f"{API_VERSION['v1']}/users", tags=["Users"])
 
 
 # Fetch all users
@@ -15,9 +16,9 @@ async def fetch_all_users(db: Session = Depends(get_db)):
     return get_all_users(db)
 
 # Get an user by id
-@router.get("/users/{user_id}")
+@router.get("/{user_id}")
 async def get_user(user_id: int, db: Session = Depends(get_db)):
-    return get_user_by_id(db, user_id)
+    return get_user_by_id(user_id, db)
 
 # Registration
 @router.post("/signup", status_code=status.HTTP_201_CREATED)

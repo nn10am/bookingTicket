@@ -9,3 +9,8 @@ class Settings:
     ALGORITHM: str = os.getenv("ALGORITHM")
 
 settings = Settings()
+
+API_VERSION = {
+    "v1": "/api/v1",
+    "v2": "/api/v2"
+}
